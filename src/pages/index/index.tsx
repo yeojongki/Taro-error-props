@@ -1,91 +1,105 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button } from '@tarojs/components'
 import './index.scss'
-import Product from '@/components/Product'
+import Popup from '@/components/Popup'
+import SubCategory from '@/components/SubCategory'
 
-export interface IProduct {
-  title: string
-  content: string
-  disabled: boolean
+export interface ICategory {
+  category: string
+  subCategories?: ICategory[]
 }
 
 interface IProps {}
 
 interface IState {
-  globalDisabled: boolean
-  products: IProduct[]
-  product3: IProduct
+  categoryDtos: ICategory[]
+  showAllCats: boolean
+  subCategories: ICategory[]
 }
 
 class Index extends Component<IProps, IState> {
   state: IState = {
-    globalDisabled: true,
-    products: [
+    showAllCats: false,
+    categoryDtos: [
       {
-        title: '产品1标题',
-        content: '被禁用',
-        disabled: true,
+        category: '父主粮',
+        subCategories: [
+          { category: '子主粮1' },
+          {
+            category: '子主粮2',
+          },
+          {
+            category: '子主粮3',
+          },
+        ],
       },
       {
-        title: '产品2标题',
-        content: '正常',
-        disabled: false,
+        category: '父零食',
+        subCategories: [
+          {
+            category: '子零食1',
+          },
+          {
+            category: '子零食2',
+          },
+        ],
       },
     ],
-    product3: {
-      title: '产品3标题',
-      content: '正常',
-      disabled: false,
-    },
+    subCategories: [],
   }
 
-  getDisabled() {
-    return this.state.globalDisabled
+  onClickCatItem = (subCategories: ICategory['subCategories']) => {
+    if (subCategories) {
+      this.setState(
+        {
+          subCategories,
+        },
+        () => {
+          console.log('设置当前分类', this.state.subCategories)
+          this.toggleShowAllCats()
+        },
+      )
+    }
+  }
+
+  toggleShowAllCats = () => {
+    this.setState({
+      showAllCats: !this.state.showAllCats,
+    })
   }
 
   render() {
+    const { categoryDtos } = this.state
+
     return (
-      <View>
+      <View className="product-list">
         <View>
-          <View>【数组】disabled 为函数返回值</View>
-          {this.state.products.map(item => (
-            <Product
-              key={item.title}
-              title={item.title}
-              renderContent={
-                <Button disabled={this.getDisabled()}>{item.content}</Button>
-              }
-            ></Product>
+          {categoryDtos.map(item => (
+            <View className="menu-item" key={item.category}>
+              <View className="menu-item_top flex">
+                <View className="menu-item_title">{item.category}</View>
+                <Button onClick={() => this.onClickCatItem(item.subCategories)}>
+                  设为当前分类
+                </Button>
+              </View>
+              <View className="menu-item_sub">
+                {item.subCategories &&
+                  item.subCategories.map(sub => (
+                    <View key={sub.category}>{sub.category}</View>
+                  ))}
+              </View>
+            </View>
           ))}
         </View>
-        <View style={{ marginTop: '30px' }}>
-          <View>【数组】disabled 为 item 中的值</View>
-          <View>
-            {this.state.products.map(item => (
-              <Product
-                key={item.title}
-                title={item.title}
-                renderContent={
-                  <Button disabled={item.disabled}>{item.content}</Button>
-                }
-              ></Product>
-            ))}
-          </View>
-        </View>
-        <View style={{ marginTop: '30px' }}>
-          <View>【item】disabled 为函数返回值</View>
-          <View>
-            <Product
-              key={this.state.product3.title}
-              title={this.state.product3.title}
-              renderContent={
-                <Button disabled={this.getDisabled()}>
-                  {this.state.product3.content}
-                </Button>
-              }
-            ></Product>
-          </View>
-        </View>
+
+        {/* <View style={{ padding: '20px', color: 'purple' }}>
+          当前子分类为：
+          <SubCategory list={this.state.subCategories}></SubCategory>
+        </View> */}
+
+        {this.state.showAllCats && <Popup show={this.state.showAllCats} onClose={this.toggleShowAllCats}>
+          <SubCategory list={this.state.subCategories}></SubCategory>
+        </Popup>}
       </View>
     )
   }

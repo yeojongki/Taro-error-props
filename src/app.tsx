@@ -20,6 +20,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/error-loop-list/index',
       'pages/index/index',
     ],
     window: {

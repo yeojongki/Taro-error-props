@@ -1,14 +1,17 @@
 {
-  "miniprogramRoot": "./dist",
-  "projectname": "taro-mobx-tt",
-  "description": "",
-  "appid": "touristappid",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "postcss": false,
-    "minified": false,
+	"miniprogramRoot": "dist/weapp/",
+	"projectname": "taro-mobx-tt",
+	"description": "",
+	"appid": "touristappid",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
 		"checkSiteMap": false
-  },
-  "compileType": "miniprogram"
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {}
 }

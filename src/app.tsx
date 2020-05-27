@@ -10,7 +10,6 @@ import './app.scss'
 // }
 
 class App extends Component {
-
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -20,32 +19,54 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/error-loop-list/index',
-      'pages/index/index',
+      'pages/swan-route-preload/test',
+      'pages/swan-route-preload/index',
+      // 'pages/swan-page-bot-empty/index',
+      // 'pages/swan-class-error/index',
+      // 'pages/error-loop-list/index',
+      // 'pages/index/index',
     ],
+    // tabBar: {
+    //   backgroundColor: '#fff',
+    //   color: '#1A1A1A',
+    //   selectedColor: '#FF80B8',
+    //   borderStyle: 'black',
+    //   list: [
+    //     {
+    //       selectedIconPath: './assets/images/navi-tab/category_active.png',
+    //       iconPath: './assets/images/navi-tab/category.png',
+    //       pagePath: 'pages/swan-page-bot-empty/index',
+    //       text: 'tab1',
+    //     },
+    //     {
+    //       selectedIconPath: './assets/images/navi-tab/home_active.png',
+    //       iconPath: './assets/images/navi-tab/home.png',
+    //       pagePath: 'pages/swan-class-error/index',
+    //       text: 'tab2',
+    //     },
+    //   ],
+    // },
     window: {
       enablePullDownRefresh: true,
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
-    }
+      navigationBarTextStyle: 'black',
+    },
   }
 
-  componentDidMount () {}
+  componentDidMount() {}
 
-  componentDidShow () {}
+  componentDidShow() {}
 
-  componentDidHide () {}
+  componentDidHide() {}
 
-  componentDidCatchError () {}
+  componentDidCatchError() {}
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
-  render () {
-    return (
-        <Index />
-    )
+  render() {
+    return <Index />
   }
 }
 
